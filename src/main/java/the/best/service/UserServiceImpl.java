@@ -3,7 +3,7 @@ package the.best.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import the.best.form.SingUpForm;
+import the.best.web.form.SingUpForm;
 import the.best.entity.User;
 import the.best.repository.UserRepository;
 
@@ -15,10 +15,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
+
     private final static double PERCENT_PRICE_TO_POINTS = 0.1;
 
     @Override
-    public User validate(User user){
+    public User validate(User user) {
+        log.info(String.valueOf(userRepository.getClass()));
         return userRepository.findByEmailAndEmailPassword(user.getEmail(), user.getEmailPassword());
     }
 
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
         log.info(singUpForm.getEmail());
         Optional<User> optionalUser = userRepository.findById(singUpForm.getEmail());
 
-        if(optionalUser.isPresent()){
+        if (optionalUser.isPresent()) {
             return null;
         }
         User user = new User();
@@ -35,24 +37,29 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(singUpForm.getFirst_name());
         user.setLastName(singUpForm.getLast_name());
         user.setEmailPassword(singUpForm.getPassword());
-        userRepository.save(user);
-        return user;
+        return userRepository.save(user);
     }
 
-//    @Override
-//    public void updateUserPoints(User user, int price, boolean isUsedDiscount) {
-//        int currentPoints = userPointsDAO.get(user);
-//        if(isUsedDiscount){
-//            currentPoints -= POINTS_REQUIRE_TO_DISCOUNT;
-//        }
-//        userPointsDAO.update(user, calculatePoints(currentPoints, price));
-//    }
+    @Override
+    public void updateUserPoints(User user, int price, boolean isUsedDiscount) {
+        int currentPoints = user.getUserPoints();
+        log.info(user.getEmail());
+        log.info(user.getEmailPassword());
+        log.info(user.getFirstName());
+        log.info(user.getLastName());
+        log.info(Integer.toString(user.getUserPoints()));
+        if (isUsedDiscount) {
+            currentPoints -= POINTS_REQUIRE_TO_DISCOUNT;
+        }
+        user.setUserPoints(calculatePoints(currentPoints, price));
+        log.info(String.valueOf(userRepository.getClass()));
+        userRepository.save(
+                user);
+    }
 
 
-
-
-    private int calculatePoints(int curPoints, int price){
-        return (int)(curPoints + price * PERCENT_PRICE_TO_POINTS);
+    private int calculatePoints(int curPoints, int price) {
+        return (int) (curPoints + price * PERCENT_PRICE_TO_POINTS);
     }
 
 }

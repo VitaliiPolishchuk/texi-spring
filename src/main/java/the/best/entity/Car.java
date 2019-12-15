@@ -24,5 +24,11 @@ public class Car implements Serializable {
     @JoinColumn(name="car_type_id")
     private CarType carType;
 
+    @Column(name = "location_id")
+    private String locationId;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
+
 
 }

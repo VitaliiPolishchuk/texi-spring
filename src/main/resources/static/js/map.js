@@ -21,11 +21,6 @@ var isOriginChosen = false,
     var autocompleteFrom = new google.maps.places.Autocomplete(inputFrom);
     var autocompleteTo = new google.maps.places.Autocomplete(inputTo);
 
-    // Bind the map's bounds (viewport) property to the autocomplete object,
-    // so that the autocomplete requests use the current map bounds for the
-    // bounds option in the request.
-
-    // Set the data fields to return when the user selects a place.
     autocompleteFrom.setFields(
         ['address_components', 'geometry', 'icon', 'name']);
 
@@ -33,9 +28,6 @@ var isOriginChosen = false,
         ['address_components', 'geometry', 'icon', 'name']);
 
 
-//    var infowindow = new google.maps.InfoWindow();
-//    var infowindowContent = document.getElementById('infowindow-content');
-//    infowindow.setContent(infowindowContent);
     var marker   = new google.maps.Marker({
       map: map,
       anchorPoint: new google.maps.Point(0, -29)
@@ -87,13 +79,11 @@ var isOriginChosen = false,
     function displayMarket(autocomplete){
       var place = autocomplete.getPlace();
           if (!place.geometry) {
-            // User entered the name of a Place that was not suggested and
-            // pressed the Enter key, or the Place Details request failed.
+
             window.alert("No details available for input: '" + place.name + "'");
             return;
           }
 
-          // If the place has a geometry, then present it on a map.
           if (place.geometry.viewport) {
             map.fitBounds(place.geometry.viewport);
           } else {
@@ -153,9 +143,6 @@ var isOriginChosen = false,
       }
     };
 
-    // document.getElementById('pac-inputFrom').addEventListener('change', onChangeHandler);
-    // document.getElementById('pac-inputTo').addEventListener('change', onChangeHandler);
-
     $('#mapForm').on("submit", function (e) {
           console.log(isDestinationChosen);
           console.log(isOriginChosen);
@@ -173,9 +160,5 @@ var isOriginChosen = false,
                 error_message.text("Path in not exist")
               }
           }
-
-
       })
-
-
   }

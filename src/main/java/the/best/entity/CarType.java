@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name="car_type")
+@Table(name = "car_type")
 @Getter
 @Setter
 public class CarType implements Serializable {

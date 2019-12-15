@@ -6,7 +6,7 @@ import the.best.entity.Discount;
 import the.best.entity.User;
 import the.best.pattern.PriceCalculationChainBuilder;
 import the.best.pattern.PriceCalculationService;
-import the.best.web.data.Order;
+import the.best.web.data.OrderData;
 
 import java.util.List;
 
@@ -16,18 +16,18 @@ public class OrderServiceImpl implements OrderService {
     PriceCalculationChainBuilder priceCalculationChainBuilder;
 
     @Override
-    public void calculatePrice(List<Order> orders, User user, Discount discount) {
+    public void calculatePrice(List<OrderData> orders, User user, Discount discount) {
         PriceCalculationService priceCalculationService = priceCalculationChainBuilder.buildStandart();
-        for(Order order : orders){
+        for (OrderData order : orders) {
             priceCalculationService.calculate(order, user, discount);
         }
     }
 
     @Override
-    public Order getCarById(List<Order> orders, int car_id) {
-        Order desirableOrder = null;
-        for(Order order : orders){
-            if(order.getCar().getId() == car_id){
+    public OrderData getCarById(List<OrderData> orders, int car_id) {
+        OrderData desirableOrder = null;
+        for (OrderData order : orders) {
+            if (order.getCar().getId() == car_id) {
                 desirableOrder = order;
             }
         }

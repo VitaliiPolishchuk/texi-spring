@@ -12,6 +12,7 @@ public class OrderBuilder {
     private Car car;
     private Location origin;
     private Location destination;
+    private Location carLocation;
     private int timeToReachDestination;
     private int timeToReachOrigin;
     private double wholePrice;
@@ -34,6 +35,11 @@ public class OrderBuilder {
 
     public OrderBuilder setDestination(Location destination) {
         this.destination = destination;
+        return this;
+    }
+
+    public OrderBuilder setCarLocation(Location location) {
+        this.carLocation = location;
         return this;
     }
 

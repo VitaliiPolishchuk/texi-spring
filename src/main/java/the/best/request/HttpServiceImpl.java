@@ -21,7 +21,7 @@ public class HttpServiceImpl implements HttpService {
 
         try {
             int statusCode = httpClient.executeMethod(method);
-            if(statusCode == HttpStatus.SC_OK){
+            if (statusCode == HttpStatus.SC_OK) {
                 return method.getResponseBody();
             }
         } catch (IOException e) {

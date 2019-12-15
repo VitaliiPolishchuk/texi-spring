@@ -5,4 +5,5 @@ import the.best.entity.User;
 
 public interface UserRepository extends CrudRepository<User, String> {
     User findByEmailAndEmailPassword(String email, String password);
+    User findByEmail(String email);
 }

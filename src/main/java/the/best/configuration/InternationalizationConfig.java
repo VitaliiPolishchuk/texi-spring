@@ -9,16 +9,15 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import the.best.config.ParamAttrConfig;
+import the.best.utils.ParamAttrConstant;
 
 import java.util.Locale;
-import java.util.Set;
 
 @Configuration
 public class InternationalizationConfig implements WebMvcConfigurer {
 
     @Bean
-    public MessageSource messageSource(){
+    public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:i18n/messages");
         messageSource.setDefaultEncoding("UTF-8");
@@ -26,7 +25,7 @@ public class InternationalizationConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public LocaleResolver localeResolver(){
+    public LocaleResolver localeResolver() {
         CookieLocaleResolver lr = new CookieLocaleResolver();
         Locale locale = new Locale("uk");
         lr.setDefaultLocale(locale);
@@ -36,12 +35,12 @@ public class InternationalizationConfig implements WebMvcConfigurer {
     @Bean
     public LocaleChangeInterceptor localeInterceptor() {
         LocaleChangeInterceptor localeInterceptor = new LocaleChangeInterceptor();
-        localeInterceptor.setParamName(ParamAttrConfig.LOCALE);
+        localeInterceptor.setParamName(ParamAttrConstant.LOCALE);
         return localeInterceptor;
     }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry){
+    public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeInterceptor());
     }
 }
